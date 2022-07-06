@@ -1,0 +1,9 @@
+*.o
+CMakeCache.txt
+ctags
+test/*
+src/ctags
+cmake_install.cmake
+/CMakeFiles/*
+/cmake-build-debug/*
+/trash/*
