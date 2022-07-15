@@ -203,7 +203,7 @@ void lcsubstr_fprint(struct lcsubstr* lcs, struct helix* h1, struct helix* h2, s
 	    fprintf(fp, "%5d %-4s", nbp2[h2->i[0]].cifid,nbp2[h2->i[0]].chain) ;
 	    fprintf(fp, "%5d %-4s", nbp2[h2->j[0]].cifid,nbp2[h2->j[0]].chain) ;
 	    fprintf(fp, "\n");
-	    fprintf(fp, "MATCH ");
+	    fprintf(fp, "MATCH1 ");
 	    for(int j=0; j<lcs->longest; ++j){
 		  pos1 = h1->i[lcs->sindex[i]+ j];
 		  pos2 = h1->j[lcs->sindex[i]+ j];
@@ -213,17 +213,39 @@ void lcsubstr_fprint(struct lcsubstr* lcs, struct helix* h1, struct helix* h2, s
 			exit(EXIT_FAILURE);
 		  }
 
+//		  pos3 = h2->i[lcs->tindex[i]+ j];
+//		  pos4 = h2->j[lcs->tindex[i]+ j];
+		  fprintf(fp, "%c-%c %s  ", nbp1[pos1].resclass, nbp1[pos2].resclass, nbp1[pos1].name[pairindx] );
+//		  pairindx = get_pair_index(nbp2, pos3, pos4);
+//		  if( pairindx < 0 ){    /* Exception Handling */ 
+//			fprintf(stderr, "Error in function %s()... invalid base pair.\n", __func__);
+//			exit(EXIT_FAILURE);
+//		  }
+
+//		  fprintf(fp, "%c-%c %s \n", nbp2[pos3].resclass, nbp2[pos4].resclass, nbp2[pos3].name[pairindx] );
+	    }
+	    fprintf(fp, "\n");
+	    fprintf(fp, "MATCH2 ");
+	    for(int j=0; j<lcs->longest; ++j){
+//		  pos1 = h1->i[lcs->sindex[i]+ j];
+//		  pos2 = h1->j[lcs->sindex[i]+ j];
+//		  pairindx = get_pair_index(nbp1, pos1, pos2);
+//		  if( pairindx < 0 ){    /* Exception Handling */ 
+//			fprintf(stderr, "Error in function %s()... invalid base pair.\n", __func__);
+//			exit(EXIT_FAILURE);
+//		  }
+
 		  pos3 = h2->i[lcs->tindex[i]+ j];
 		  pos4 = h2->j[lcs->tindex[i]+ j];
-		  fprintf(fp, "%c-%c %s  ", nbp1[pos1].resclass, nbp1[pos2].resclass, nbp1[pos1].name[pairindx] );
 		  pairindx = get_pair_index(nbp2, pos3, pos4);
 		  if( pairindx < 0 ){    /* Exception Handling */ 
 			fprintf(stderr, "Error in function %s()... invalid base pair.\n", __func__);
 			exit(EXIT_FAILURE);
 		  }
 
-//		  fprintf(fp, "%c-%c %s \n", nbp2[pos3].resclass, nbp2[pos4].resclass, nbp2[pos3].name[pairindx] );
+		  fprintf(fp, "%c-%c %s  ", nbp2[pos3].resclass, nbp2[pos4].resclass, nbp2[pos3].name[pairindx] );
 	    }
+	    fprintf(fp, "\n");
 	    fprintf(fp, "\n%5d %-4s", nbp1[h1->i[h1->size - 1]].cifid,nbp1[h1->i[h1->size - 1]].chain) ;
 	    fprintf(fp, "%5d %-4s", nbp1[h1->j[h1->size - 1]].cifid,nbp1[h1->j[h1->size - 1]].chain) ;
 
@@ -281,6 +303,7 @@ void hlx_needleman_wunsch(struct helix* hlx1, struct helix* hlx2, struct nucbp* 
 
 
       }
+      fprintf(fp, "======================\n");
       free(s);
       free(t);
       s = NULL;
@@ -317,7 +340,6 @@ void hlx_needleman_wunsch_generate(struct hlxinfo* hlx1, struct hlxinfo* hlx2, c
       for(int i=0; i<hlx1->hlxcount; ++i){
 	    for(int j=0; j<hlx2->hlxcount; ++j){
 		  hlx_needleman_wunsch(hlx1->helix + i, hlx2->helix + j, hlx1->rnabp, hlx2->rnabp, fp);
-		  fprintf(fp, "==============\n\n");
 	    }
       }
 

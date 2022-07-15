@@ -111,6 +111,7 @@ int create_bp_integer(int res1, int res2, int edge1, int edge2, int ori)
 }
 
 
+
 int get_seq(char res1, char res2, char edge1, char edge2, char ori, char* rule)
 {
       int orival = 0;
@@ -136,7 +137,7 @@ int get_seq(char res1, char res2, char edge1, char edge2, char ori, char* rule)
           if(res1 == 'U') res1 = 'C';
           if(res2 == 'A') res2 = 'G';
           if(res2 == 'U') res2 = 'C';
-          }
+      }
 
       int res1val = convert_res(res1);
       int res2val = convert_res(res2);
